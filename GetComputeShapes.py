@@ -3,21 +3,21 @@ from prettytable import PrettyTable
 import csv
 
 def main():
-    # --------------------------------------------------------------------
-    # 1. OCI CONFIG & CLIENTS
-    # --------------------------------------------------------------------
-    # Change to your compartment or tenancy OCID
-    compartment_id = ""
-
-    # Optionally set the region here or rely on your config
-    region = ""
-
-    # Load config from ~/.oci/config (Default profile)
+    # ------------------------------------------------------------------
+    # 1. CONFIG & INPUTS
+    # ------------------------------------------------------------------
+    # Load config from ~/.oci/config
     config = oci.config.from_file(profile_name="DEFAULT")
-    # Override region if needed
-    config["region"] = region
+    
+    # Ask for choice to use tenancy ID from config or provide manually
+    use_config_tenancy_id = input("Do you want to use tenancy ID from config? (yes/no): ").strip().lower()
+    if use_config_tenancy_id == 'yes':
+        tenancy_id = config["tenancy"]
+    else:
+        tenancy_id = input("Enter your tenancy ID: ").strip()
 
-    compute_client = oci.core.ComputeClient(config)
+    # Prompt user for region to check
+    region_to_check = input("Enter region to check: ").strip()
 
     # --------------------------------------------------------------------
     # 2. FETCH SHAPES
