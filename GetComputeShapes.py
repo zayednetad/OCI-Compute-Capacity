@@ -19,6 +19,8 @@ def main():
     # Prompt user for region to check
     region_to_check = input("Enter region to check: ").strip()
 
+    # ComputeClient for shape reports
+    compute_client = oci.core.ComputeClient(config)
     # --------------------------------------------------------------------
     # 2. FETCH SHAPES
     # --------------------------------------------------------------------
